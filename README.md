@@ -35,7 +35,7 @@ This mechanism allows an efficient and fast way to prune actions with falsified 
 
 # Citations
 
-If you find our work interesting or the repo useful, please consider citing [this paper](https://arxiv.org/abs/2502.13006):
+If you find our work interesting or the repo useful, please consider citing [this paper](https://doi.org/10.1609/socs.v17i1.31571):
 ```
 @inproceedings{benyamin2024crafting,
  title={Crafting a Pogo Stick in Minecraft with Heuristic Search},
