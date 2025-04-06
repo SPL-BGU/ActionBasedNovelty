@@ -2,7 +2,9 @@
 
 We propose domain-independent heuristics that prioritize nodes based on the novelty of the actions that lead to them and the novelty of the actions they enable.
 
-We implemented our heuristics into NYX [(Piotrowski and Perez 2024)](https://arxiv.org/abs/2402.11901), a versatile, Python-based, domain-independent planner [(link to the original code)](https://gitlab.com/wmgp9/nyx).
+These heuristics implemented into NYX [(Piotrowski and Perez 2024)](https://arxiv.org/abs/2402.11901), a versatile, Python-based, domain-independent planner [(link to the original code)](https://gitlab.com/wmgp9/nyx).
+
+We started to develop these domain-independent heuristics in order to solve Minecraft PDDL domain instances better. The code of the PDDL Problem Generator for Minecraft Domain is in that [link](https://github.com/SPL-BGU/PDDL-Minecraft).
 
 ## Planner execution
 ```Shell
