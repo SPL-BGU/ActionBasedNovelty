@@ -9,6 +9,13 @@ check_goal = None
 
 
 def start(grounded_instance):
+    """
+    Initialize the heuristic function with the given grounded instance.
+    This function sets up the necessary global variables and prepares
+    the heuristic function for use in the search algorithm.
+
+    :param grounded_instance: An instance of the grounded problem.
+    """
     global actions
     global unique_names
     global curr_list
@@ -79,6 +86,13 @@ def heuristic_function(state):
 
 
 def update_novelty(state) -> None:
+    """
+    Update the novelty of actions based on the current state.
+    This function is called when the state changes and updates
+    the novelty of the actions in the global list.
+
+    :param state: The current state of the problem.
+    """
     global actions
     global unique_names
     global curr_list

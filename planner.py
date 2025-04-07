@@ -65,24 +65,27 @@ class Planner:
         while self.queue:
             state = self.queue.popleft()
 
-            # lazy check for currect novelty
-            if state.predecessor_action is not None:
-                novelty = heuristic_functions.heuristic_function(state)
-                if state.get_h_heuristic() < novelty:
-                    state.set_h_heuristic(novelty)
-                    if constants.SEARCH_GBFS:
-                        bisect.insort(self.queue, state)
-                    elif constants.SEARCH_ASTAR:
-                        self.queue.appendleft(state)
-                        self.queue = collections.deque(
-                            sorted(self.queue, key=lambda elem: (elem.h * 16 + elem.g))
-                        )
-                    elif constants.SEARCH_DFS:
-                        self.queue.appendleft(state)
-                        self.queue = collections.deque(
-                            sorted(self.queue, key=lambda elem: (-elem.depth, elem.h))
-                        )
-                    continue
+            # check for currect novelty again when popping from the open list
+            if constants.DOUBLE_HEURISTIC:
+                if state.predecessor_action is not None:
+                    novelty = heuristic_functions.heuristic_function(state)
+                    if state.get_h_heuristic() < novelty:
+                        state.set_h_heuristic(novelty)
+                        if constants.SEARCH_GBFS:
+                            bisect.insort(self.queue, state)
+                        elif constants.SEARCH_ASTAR:
+                            self.queue.appendleft(state)
+                            self.queue = collections.deque(
+                                sorted(self.queue, key=lambda elem: (elem.h + elem.g))
+                            )
+                        elif constants.SEARCH_DFS:
+                            self.queue.appendleft(state)
+                            self.queue = collections.deque(
+                                sorted(
+                                    self.queue, key=lambda elem: (-elem.depth, elem.h)
+                                )
+                            )
+                        continue
 
             if grounded_instance.goals(state, constants):
                 self.total_goals_found += 1
@@ -334,24 +337,27 @@ class Planner:
         while self.queue:
             state = self.queue.popleft()
 
-            # lazy check for currect novelty
-            if state.predecessor_action is not None:
-                novelty = heuristic_functions.heuristic_function(state)
-                if state.get_h_heuristic() < novelty:
-                    state.set_h_heuristic(novelty)
-                    if constants.SEARCH_GBFS:
-                        bisect.insort(self.queue, state)
-                    elif constants.SEARCH_ASTAR:
-                        self.queue.appendleft(state)
-                        self.queue = collections.deque(
-                            sorted(self.queue, key=lambda elem: (elem.h * 16 + elem.g))
-                        )
-                    elif constants.SEARCH_DFS:
-                        self.queue.appendleft(state)
-                        self.queue = collections.deque(
-                            sorted(self.queue, key=lambda elem: (-elem.depth, elem.h))
-                        )
-                    continue
+            # check for currect novelty again when popping from the open list
+            if constants.DOUBLE_HEURISTIC:
+                if state.predecessor_action is not None:
+                    novelty = heuristic_functions.heuristic_function(state)
+                    if state.get_h_heuristic() < novelty:
+                        state.set_h_heuristic(novelty)
+                        if constants.SEARCH_GBFS:
+                            bisect.insort(self.queue, state)
+                        elif constants.SEARCH_ASTAR:
+                            self.queue.appendleft(state)
+                            self.queue = collections.deque(
+                                sorted(self.queue, key=lambda elem: (elem.h + elem.g))
+                            )
+                        elif constants.SEARCH_DFS:
+                            self.queue.appendleft(state)
+                            self.queue = collections.deque(
+                                sorted(
+                                    self.queue, key=lambda elem: (-elem.depth, elem.h)
+                                )
+                            )
+                        continue
 
             if grounded_instance.goals(state, constants):
                 self.total_goals_found += 1
@@ -584,7 +590,7 @@ class Planner:
             n_state.set_h_heuristic(heuristic_functions.heuristic_function(n_state))
             self.queue.appendleft(n_state)
             self.queue = collections.deque(
-                sorted(self.queue, key=lambda elem: (elem.h * 16 + elem.g))
+                sorted(self.queue, key=lambda elem: (elem.h + elem.g))
             )
 
         if constants.PRINT_ALL_STATES:
